@@ -1,0 +1,55 @@
+#!/usr/bin/env php
+<?php declare(strict_types=1);
+/*
+ * Este arquivo faz parte de iungo-web/img-compressor-cli
+ *
+ * (c) Mateus Fernandes <mf@iungoweb.io>
+ */
+
+if (version_compare('8.0', PHP_VERSION, '>')) {
+	fwrite(
+		STDERR,
+		sprintf(
+			'Esta versão do compressor precisa do PHP >= 8.0.' . PHP_EOL .
+			'Você esta usando o PHP %s (%s).' . PHP_EOL,
+			PHP_VERSION,
+			PHP_BINARY
+		)
+	);
+
+	die(1);
+}
+
+if (!ini_get('date.timezone')) {
+	ini_set('date.timezone', 'UTC');
+}
+
+$arquivosAutoload = [
+	__DIR__ . '/../../autoload.php', __DIR__ . '/../vendor/autoload.php',
+	__DIR__ . '/vendor/autoload.php'
+];
+
+foreach ($arquivosAutoload as $arquivo) {
+	if (file_exists($arquivo)) {
+		define('IMG_COMPRESSOR_CLI_COMPOSER_INSTALL', $arquivo);
+
+		break;
+	}
+}
+
+unset($arquivo);
+
+if (!defined('IMG_COMPRESSOR_CLI_COMPOSER_INSTALL')) {
+	fwrite(
+		STDERR,
+		'Você precisa instalar as dependências desse projeto com o Composer:' . PHP_EOL . PHP_EOL .
+		'    composer install' . PHP_EOL . PHP_EOL .
+		'Você pode saber tudo sobre o Composer em https://getcomposer.org/.' . PHP_EOL
+	);
+
+	die(1);
+}
+
+require IMG_COMPRESSOR_CLI_COMPOSER_INSTALL;
+
+(new IungoWeb\Compressor(IMG_COMPRESSOR_CLI_COMPOSER_INSTALL))->executa();

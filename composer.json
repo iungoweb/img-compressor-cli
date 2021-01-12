@@ -1,0 +1,35 @@
+{
+	"name": "iungo-web/img-compressor-cli",
+	"description": "Um simples utilitário para facilitar a exibição de mensagens no terminal enquanto o PHP é utilizado via linha de comando.",
+	"type": "library",
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Iungo Web",
+			"email": "falarcom@iungoweb.io",
+			"homepage": "https://iungoweb.io",
+			"role": "Empresa proprietária"
+		},
+		{
+			"name": "Mateus Fernandes",
+			"email": "mf@iungoweb.io",
+			"homepage": "https://mfmello.com.br",
+			"role": "Desenvolvedor"
+		}
+	],
+	"require": {
+        "tinify/tinify": "^1.5",
+		"ext-exif": "*",
+        "symfony/dotenv": "^5.2",
+        "iungo-web/terminal": "^0.1.0",
+		"php": ">=8.0"
+	},
+	"autoload": {
+		"psr-4": {
+			"IungoWeb\\": "src/"
+		}
+	},
+	"bin": [
+		"compressor"
+	]
+}
